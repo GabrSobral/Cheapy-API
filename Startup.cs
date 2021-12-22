@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Cheapy_API.Data;
 using Microsoft.Extensions.Configuration;
+using Cheapy_API.Data;
+using Cheapy_API.Settings;
+
 namespace Cheapy_API
 {
     public class Startup
@@ -18,6 +20,7 @@ namespace Cheapy_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JwtSecret>(Configuration.GetSection("JwtSecret"));
             services.AddDbContext<AppDbContext>(
                 options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
         }
