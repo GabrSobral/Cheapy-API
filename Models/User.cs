@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace Cheapy_API.Models
 {
@@ -17,5 +18,7 @@ namespace Cheapy_API.Models
         
         [JsonIgnore]
         public string Password { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }
