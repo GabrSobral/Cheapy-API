@@ -11,7 +11,7 @@ namespace Cheapy_API.Controllers.UserController.Register
     {
         public async Task<User> Execute(AppDbContext context, RequestModel model)
         {
-            var alreadyExists = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
+            var alreadyExists = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
 
             if(alreadyExists != null)
                 throw new Exception("User already exists status:400");
@@ -21,7 +21,7 @@ namespace Cheapy_API.Controllers.UserController.Register
             User newUser = new User
             {
                 Name = model.Name,
-                Email = model.Email,
+                Email = model.Email.ToLower(),
                 Password = hashedPassword,
                 Role = model.Role
             } ;
