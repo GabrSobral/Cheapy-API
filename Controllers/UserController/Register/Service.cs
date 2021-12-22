@@ -4,12 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using Cheapy_API.Models;
 using Cheapy_API.Data;
 using Bcrypt = BCrypt.Net.BCrypt;
+using Cheapy_API.Services;
 
 namespace Cheapy_API.Controllers.UserController.Register
 {
     public class Service
     {
-        public async Task<User> Execute(AppDbContext context, RequestModel model)
+        private JsonWebToken _jsonWebToken;
+
+		public Service(JsonWebToken jsonWebToken) => _jsonWebToken = jsonWebToken;
+        
+        public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
         {
             var alreadyExists = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
 
@@ -29,7 +34,12 @@ namespace Cheapy_API.Controllers.UserController.Register
             await context.AddAsync(newUser);
             await context.SaveChangesAsync();
 
-            return newUser;
+            var token = _jsonWebToken.Generate(newUser);
+
+            return new ResponseModel{
+                User = newUser,
+                Token = token
+            };
         }
     }
 }

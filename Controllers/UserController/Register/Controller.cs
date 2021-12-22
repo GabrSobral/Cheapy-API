@@ -10,6 +10,10 @@ namespace Cheapy_API.Controllers.UserController.Register
     [Route("v1")]
     public class Controller : ControllerBase
     {
+        private JsonWebToken _jsonWebToken;
+
+		public Controller(JsonWebToken jsonWebToken) => _jsonWebToken = jsonWebToken;
+
         [HttpPost("users")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
@@ -20,7 +24,7 @@ namespace Cheapy_API.Controllers.UserController.Register
 
             try
             {
-                var result  = await new Service().Execute(context, model);
+                var result  = await new Service(_jsonWebToken).Execute(context, model);
                 return Created("", result);
             } 
             catch(Exception error)
