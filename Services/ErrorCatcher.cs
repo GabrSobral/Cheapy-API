@@ -3,25 +3,21 @@ using System;
 
 namespace Cheapy_API.Services
 {
-    public class ErrorCatcher
+    public class ErrorCatcher : ControllerBase
     {
         private string _message { get; set; }
-        private int _status { get; set; }
+        private int    _status  { get; set; }
 
         public ErrorCatcher(Exception error) 
         {
-            _message = error.Message.Split("status:")[0];
-            _status = int.Parse(error.Message.Split("status:")[1]);
-
-            Console.WriteLine(_status);
-
-            if(_status == 0)
-                _status = 500;
+            var errorMessage = error.Message.Split(" status:");
+            _message = errorMessage[0];
+            _status = errorMessage.Length == 2 ? int.Parse(errorMessage[1]) : 500;
         }
 
-        public StatusCodeResult Return()
+        public ObjectResult Return()
         {
-            return new StatusCodeResult((_status));
+            return StatusCode(_status, new { message = _message });
         }
     }
 }
