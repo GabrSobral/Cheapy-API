@@ -1,1 +1,1 @@
-# Cheapy---API
+# Cheapy-API
