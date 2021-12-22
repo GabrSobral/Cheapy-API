@@ -20,6 +20,7 @@ namespace Cheapy_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.Configure<JwtSecret>(Configuration.GetSection("JwtSecret"));
             services.AddDbContext<AppDbContext>(
                 options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
