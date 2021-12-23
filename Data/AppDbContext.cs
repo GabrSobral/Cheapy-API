@@ -20,10 +20,16 @@ namespace Cheapy_API.Data
             builder.Entity<Category_Product>().HasKey(table => 
                 new { table.CategoryId, table.ProductId });
 
+            builder.Entity<Product>().HasKey(table => 
+                new { table.Id, table.AdvertiserId });
+
             builder.Entity<Feedback>().HasKey(table => 
                 new { table.ProductId, table.UserId });
 
             builder.Entity<ShoppingCart>().HasKey(table => 
+                new { table.ProductId, table.UserId });
+
+            builder.Entity<PaymentHistory>().HasKey(table => 
                 new { table.ProductId, table.UserId });
         }
 

@@ -21,6 +21,7 @@ namespace Cheapy_API.Models
             public virtual List<Category_Product> CategoryProduct { get; set; }
             public virtual List<Feedback> Feedbacks { get; set; }
             public virtual List<ShoppingCart> ShoppingCarts { get; set; }
+            public virtual List<PaymentHistory> PaymentsHistory { get; set; }
         #endregion
     }
 }

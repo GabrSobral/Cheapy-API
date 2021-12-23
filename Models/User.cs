@@ -12,7 +12,7 @@ namespace Cheapy_API.Models
             public string Email { get; set; }
             public DateTime CreatedAt { get; set; } = DateTime.Now;
             public string Role { get; set; }
-            
+
             [JsonIgnore]
             public string Password { get; set; }
         #endregion
@@ -21,6 +21,7 @@ namespace Cheapy_API.Models
             public virtual List<Product> Products { get; set; }
             public virtual List<Feedback> Feedbacks { get; set; }
             public virtual List<ShoppingCart> ShoppingCarts { get; set; }
+            public virtual List<PaymentHistory> PaymentsHistory { get; set; }
         #endregion
     }
 }
