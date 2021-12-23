@@ -19,6 +19,6 @@ namespace Cheapy_API.Models
         [JsonIgnore]
         public string Password { get; set; }
 
-        public List<Product> Products { get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }

@@ -3,14 +3,16 @@ using System;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cheapy_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211222233809_AddCategoryProductTableFix1")]
+    partial class AddCategoryProductTableFix1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,13 +34,21 @@ namespace Cheapy_API.Migrations
 
             modelBuilder.Entity("Cheapy_API.Models.Category_Product", b =>
                 {
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("Category_Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("Product_Id")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CategoryId", "ProductId");
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Category_Id", "Product_Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ProductId");
 
@@ -109,15 +119,11 @@ namespace Cheapy_API.Migrations
                 {
                     b.HasOne("Cheapy_API.Models.Category", "Category")
                         .WithMany("CategoryProduct")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("Cheapy_API.Models.Product", "Product")
                         .WithMany("CategoryProduct")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Category");
 

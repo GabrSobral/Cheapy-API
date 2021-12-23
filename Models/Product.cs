@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Cheapy_API.Models
 {
@@ -20,7 +20,9 @@ namespace Cheapy_API.Models
         public float Discount { get; set; }
 
         public Guid AdvertiserId { get; set; }
-        public User Advertiser { get; set; }
+        public virtual User Advertiser { get; set; }
+
+        public virtual List<Category_Product> CategoryProduct { get; set; }
 
     }
 }
