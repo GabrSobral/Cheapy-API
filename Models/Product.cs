@@ -24,5 +24,7 @@ namespace Cheapy_API.Models
 
         public virtual List<Category_Product> CategoryProduct { get; set; }
 
+        public virtual List<Feedback> Feedbacks { get; set; }
+
     }
 }

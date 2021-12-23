@@ -20,5 +20,7 @@ namespace Cheapy_API.Models
         public string Password { get; set; }
 
         public virtual List<Product> Products { get; set; }
+
+        public virtual List<Feedback> Feedbacks { get; set; }
     }
 }
