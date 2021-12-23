@@ -1,18 +1,19 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cheapy_API.Models
 {
-    public class Category_Product
+    public class ShoppingCart
     {
         #region Columns
+            public Guid UserId { get; set; }
             public Guid ProductId { get; set; }
-            public Guid CategoryId { get; set; }
+            public int ProductQuantity { get; set; }
         #endregion
 
         #region Navigation Objects
+            public virtual User User { get; set; }
             public virtual Product Product { get; set; }
-            public virtual Category Category { get; set; }
         #endregion
+
     }
 }

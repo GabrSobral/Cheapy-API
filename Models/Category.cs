@@ -7,11 +7,13 @@ namespace Cheapy_API.Models
 {
     public class Category
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        #region Columns
+            public Guid Id { get; set; } = Guid.NewGuid();
+            public string Name { get; set; }
+        #endregion
 
-        public string Name { get; set; }
-
-        public virtual List<Category_Product> CategoryProduct { get; set; }
+        #region Navigations Objects
+            public virtual List<Category_Product> CategoryProduct { get; set; }
+        #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace Cheapy_API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Category_Product> CategoriesProducts { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {
@@ -20,6 +21,9 @@ namespace Cheapy_API.Data
                 new { table.CategoryId, table.ProductId });
 
             builder.Entity<Feedback>().HasKey(table => 
+                new { table.ProductId, table.UserId });
+
+            builder.Entity<ShoppingCart>().HasKey(table => 
                 new { table.ProductId, table.UserId });
         }
 

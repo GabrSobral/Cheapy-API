@@ -6,21 +6,21 @@ namespace Cheapy_API.Models
 {
     public class User
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        #region Columns
+            public Guid Id { get; set; } = Guid.NewGuid();
+            public string Name { get; set; }
+            public string Email { get; set; }
+            public DateTime CreatedAt { get; set; } = DateTime.Now;
+            public string Role { get; set; }
+            
+            [JsonIgnore]
+            public string Password { get; set; }
+        #endregion
 
-        public string Name { get; set; }
-
-        public string Email { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        public string Role { get; set; }
-        
-        [JsonIgnore]
-        public string Password { get; set; }
-
-        public virtual List<Product> Products { get; set; }
-
-        public virtual List<Feedback> Feedbacks { get; set; }
+        #region Navigation Objects
+            public virtual List<Product> Products { get; set; }
+            public virtual List<Feedback> Feedbacks { get; set; }
+            public virtual List<ShoppingCart> ShoppingCarts { get; set; }
+        #endregion
     }
 }
