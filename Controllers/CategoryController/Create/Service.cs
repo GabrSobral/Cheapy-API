@@ -25,11 +25,7 @@ namespace Cheapy_API.Controllers.CategoryController.Create
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
 
-            return new ResponseModel
-            {
-                Id = category.Id,
-                Name = category.Name
-            };
+            return new ResponseModel(category);
         }
     }
 }

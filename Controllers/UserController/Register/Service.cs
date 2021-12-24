@@ -38,10 +38,7 @@ namespace Cheapy_API.Controllers.UserController.Register
 
             var token = _jsonWebToken.Generate(newUser);
 
-            return new ResponseModel{
-                User = newUser,
-                Token = token
-            };
+            return new ResponseModel(newUser, token);
         }
     }
 }
