@@ -16,7 +16,9 @@ namespace Cheapy_API.Controllers.UserController.Authenticate
 
         public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
         {
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
+            var user = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
 
             if(user == null)
                 throw new Exception("Email/Password invalid status:400");

@@ -16,7 +16,9 @@ namespace Cheapy_API.Controllers.UserController.Register
         
         public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
         {
-            var alreadyExists = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
+            var alreadyExists = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
 
             if(alreadyExists != null)
                 throw new Exception("User already exists status:400");
