@@ -8,7 +8,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
 {
     public class Service
     {
-        public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
+        public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model, Guid userId)
         {
             var newProduct = new Product
             {
@@ -17,7 +17,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
                 Price = model.Price,
                 Quantity = model.Quantity,
                 Discount = 0,
-                AdvertiserId = model.Advertiser
+                AdvertiserId = userId
             };
             
             await context.Products.AddAsync(newProduct);

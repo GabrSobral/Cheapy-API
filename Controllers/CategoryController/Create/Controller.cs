@@ -9,7 +9,7 @@ namespace Cheapy_API.Controllers.CategoryController.Create
 {
     [ApiController]
     [Route("v1")]
-    public class Controller : ControllerBase
+    public class Controller : BaseController
     {
         [Authorize]
         [HttpPost("categories")]

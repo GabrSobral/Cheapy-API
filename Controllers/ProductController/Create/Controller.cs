@@ -9,7 +9,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
 {
     [ApiController]
     [Route("v1")]
-    public class Controller : ControllerBase
+    public class Controller : BaseController
     {
         [Authorize]
         [HttpPost("products")]
@@ -18,11 +18,12 @@ namespace Cheapy_API.Controllers.ProductController.Create
             [FromBody] RequestModel model)
         {
             if(!ModelState.IsValid)
-                return BadRequest("Invalid model");
+                return BadRequest();
 
             try
             {
-                var result = await new Service().Execute(context, model);
+                var userId = GetUserId();
+                var result = await new Service().Execute(context, model, userId: GetUserId());
                 return Created("", result);
             }
             catch(Exception error)
