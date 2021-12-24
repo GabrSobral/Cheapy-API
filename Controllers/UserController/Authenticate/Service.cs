@@ -4,14 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Cheapy_API.Models;
 using Cheapy_API.Data;
 using Bcrypt = BCrypt.Net.BCrypt;
+using Cheapy_API.Services;
 
 namespace Cheapy_API.Controllers.UserController.Authenticate
 {
     public class Service
     {
-        public async Task<User> Execute(AppDbContext context, RequestModel model)
+        private JsonWebToken _jsonWebToken;
+
+		public Service(JsonWebToken jsonWebToken) => _jsonWebToken = jsonWebToken;
+
+        public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
         {
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
+            var user = await context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == model.Email.ToLower());
 
             if(user == null)
                 throw new Exception("Email/Password invalid status:400");
@@ -19,7 +26,12 @@ namespace Cheapy_API.Controllers.UserController.Authenticate
             if(!Bcrypt.Verify(model.Password, user.Password))
                 throw new Exception("Email/Password invalid status:400");
 
-            return user;
+            var token = _jsonWebToken.Generate(user);
+
+            return new ResponseModel{
+                User = user,
+                Token = token
+            };
         }
     }
 }

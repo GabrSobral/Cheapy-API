@@ -3,14 +3,16 @@ using System;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cheapy_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211223115614_AddShoppingCart")]
+    partial class AddShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,27 +69,6 @@ namespace Cheapy_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("Cheapy_API.Models.PaymentHistory", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("PaidAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("PaidValue")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("ProductId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PaymentHistories");
                 });
 
             modelBuilder.Entity("Cheapy_API.Models.Product", b =>
@@ -206,25 +187,6 @@ namespace Cheapy_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Cheapy_API.Models.PaymentHistory", b =>
-                {
-                    b.HasOne("Cheapy_API.Models.Product", "Product")
-                        .WithMany("PaymentsHistory")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cheapy_API.Models.User", "User")
-                        .WithMany("PaymentsHistory")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Cheapy_API.Models.Product", b =>
                 {
                     b.HasOne("Cheapy_API.Models.User", "Advertiser")
@@ -266,16 +228,12 @@ namespace Cheapy_API.Migrations
 
                     b.Navigation("Feedbacks");
 
-                    b.Navigation("PaymentsHistory");
-
                     b.Navigation("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Cheapy_API.Models.User", b =>
                 {
                     b.Navigation("Feedbacks");
-
-                    b.Navigation("PaymentsHistory");
 
                     b.Navigation("Products");
 

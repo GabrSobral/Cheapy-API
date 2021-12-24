@@ -3,14 +3,16 @@ using System;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cheapy_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211223112754_AddCategoryProductTableFix4")]
+    partial class AddCategoryProductTableFix4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,51 +47,6 @@ namespace Cheapy_API.Migrations
                     b.ToTable("CategoriesProducts");
                 });
 
-            modelBuilder.Entity("Cheapy_API.Models.Feedback", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Stars")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("Cheapy_API.Models.PaymentHistory", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("PaidAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("PaidValue")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("ProductId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PaymentHistories");
-                });
-
             modelBuilder.Entity("Cheapy_API.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -122,24 +79,6 @@ namespace Cheapy_API.Migrations
                     b.HasIndex("AdvertiserId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Cheapy_API.Models.ShoppingCart", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Cheapy_API.Models.User", b =>
@@ -187,44 +126,6 @@ namespace Cheapy_API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Cheapy_API.Models.Feedback", b =>
-                {
-                    b.HasOne("Cheapy_API.Models.Product", "Product")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cheapy_API.Models.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Cheapy_API.Models.PaymentHistory", b =>
-                {
-                    b.HasOne("Cheapy_API.Models.Product", "Product")
-                        .WithMany("PaymentsHistory")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cheapy_API.Models.User", "User")
-                        .WithMany("PaymentsHistory")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Cheapy_API.Models.Product", b =>
                 {
                     b.HasOne("Cheapy_API.Models.User", "Advertiser")
@@ -236,25 +137,6 @@ namespace Cheapy_API.Migrations
                     b.Navigation("Advertiser");
                 });
 
-            modelBuilder.Entity("Cheapy_API.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("Cheapy_API.Models.Product", "Product")
-                        .WithMany("ShoppingCarts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cheapy_API.Models.User", "User")
-                        .WithMany("ShoppingCarts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Cheapy_API.Models.Category", b =>
                 {
                     b.Navigation("CategoryProduct");
@@ -263,23 +145,11 @@ namespace Cheapy_API.Migrations
             modelBuilder.Entity("Cheapy_API.Models.Product", b =>
                 {
                     b.Navigation("CategoryProduct");
-
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("PaymentsHistory");
-
-                    b.Navigation("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Cheapy_API.Models.User", b =>
                 {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("PaymentsHistory");
-
                     b.Navigation("Products");
-
-                    b.Navigation("ShoppingCarts");
                 });
 #pragma warning restore 612, 618
         }
