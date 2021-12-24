@@ -11,6 +11,7 @@ namespace Cheapy_API.Controllers.CategoryController.Create
     [Route("v1")]
     public class Controller : ControllerBase
     {
+        [Authorize]
         [HttpPost("categories")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
