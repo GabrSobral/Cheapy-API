@@ -3,6 +3,7 @@ using Cheapy_API.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cheapy_API.Controllers.CategoryController.Create
 {

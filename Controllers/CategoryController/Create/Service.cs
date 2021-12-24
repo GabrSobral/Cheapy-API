@@ -8,7 +8,7 @@ namespace Cheapy_API.Controllers.CategoryController.Create
 {
     public class Service
     {
-        public async Task<Category> Execute(AppDbContext context, RequestModel model)
+        public async Task<ResponseModel> Execute(AppDbContext context, RequestModel model)
         {
             var alreadyExists = await context.Categories
                 .AsNoTracking()
@@ -22,7 +22,14 @@ namespace Cheapy_API.Controllers.CategoryController.Create
                 Name = model.Name
             };
 
-            return category;
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
+
+            return new ResponseModel
+            {
+                Id = category.Id,
+                Name = category.Name
+            };
         }
     }
 }

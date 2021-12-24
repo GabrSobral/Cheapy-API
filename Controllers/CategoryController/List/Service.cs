@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cheapy_API.Models;
@@ -14,7 +13,7 @@ namespace Cheapy_API.Controllers.CategoryController.List
             var categories = await context.Categories
                 .AsNoTracking()
                 .ToListAsync();
-                
+
             return categories;
         }
     }

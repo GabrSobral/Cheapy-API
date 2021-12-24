@@ -3,6 +3,7 @@ using Cheapy_API.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cheapy_API.Controllers.CategoryController.List
 {
@@ -10,6 +11,7 @@ namespace Cheapy_API.Controllers.CategoryController.List
     [Route("v1")]
     public class Controller : ControllerBase
     {
+        [Authorize]
         [HttpGet("categories")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context)
