@@ -5,24 +5,20 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.ProductController.Create
+namespace Cheapy_API.Controllers.ShoppingCartsController.MyList
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpPost("products")]
+        [HttpGet("shopping/my-list")]
         public async Task<IActionResult> Handle(
-            [FromServices] AppDbContext context,
-            [FromBody] RequestModel model)
+            [FromServices] AppDbContext context)
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
-                var result = await new Service().Execute(context, model, userId: GetUserId());
+                var result = await new Service().Execute(context, GetUserId());
                 return Created("", result);
             }
             catch(Exception error)

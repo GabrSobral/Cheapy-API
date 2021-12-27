@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.ProductController.Create
+namespace Cheapy_API.Controllers.ShoppingCartsController.Add
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpPost("products")]
+        [HttpPost("shopping/add")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
             [FromBody] RequestModel model)
@@ -22,7 +22,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
 
             try
             {
-                var result = await new Service().Execute(context, model, userId: GetUserId());
+                var result = await new Service().Execute(context, model, GetUserId());
                 return Created("", result);
             }
             catch(Exception error)

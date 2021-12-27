@@ -22,7 +22,7 @@ namespace Cheapy_API.Models
             [JsonIgnore] public virtual List<Category_Product> CategoryProduct { get; set; }
             [JsonIgnore] public virtual List<Feedback> Feedbacks { get; set; }
             [JsonIgnore] public virtual List<ShoppingCart> ShoppingCarts { get; set; }
-            [JsonIgnore]public virtual List<PaymentHistory> PaymentsHistory { get; set; }
+            [JsonIgnore] public virtual List<PaymentHistory> PaymentsHistory { get; set; }
         #endregion
     }
 }

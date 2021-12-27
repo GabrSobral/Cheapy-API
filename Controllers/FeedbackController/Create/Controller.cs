@@ -5,24 +5,26 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.ProductController.Create
+namespace Cheapy_API.Controllers.FeedbackController.Create
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpPost("products")]
+        [HttpPost("feedbacks/{id}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromBody] RequestModel model)
+            [FromBody] RequestModel model,
+            [FromRoute] Guid id)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = await new Service().Execute(context, model, userId: GetUserId());
+                var userId = GetUserId();
+                var result = await new Service().Execute(context, model, GetUserId(), id);
                 return Created("", result);
             }
             catch(Exception error)
