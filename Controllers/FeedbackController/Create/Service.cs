@@ -1,0 +1,50 @@
+using System.Threading.Tasks;
+using System;
+using Cheapy_API.Data;
+using Cheapy_API.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Cheapy_API.Controllers.FeedbackController.Create
+{
+    public class Service
+    {
+        public async Task<Feedback> Execute(
+            AppDbContext context, 
+            RequestModel model, 
+            Guid userId,
+            Guid productId)
+        {
+            var product = await context.Products
+                .FirstOrDefaultAsync(x => x.Id == productId);
+
+            if(product == null)
+                throw new Exception("Product not found status:404");
+                
+            var feedback = await context.Feedbacks
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if(feedback == null)
+            {
+                var newFeedback = new Feedback
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    Message = model.Message,
+                    Stars = model.Stars,
+                };
+                await context.Feedbacks.AddAsync(newFeedback);
+                await context.SaveChangesAsync();
+
+                return newFeedback;
+            }
+
+            feedback.Message = model.Message;
+            feedback.Stars = model.Stars;
+
+            context.Feedbacks.Update(feedback);
+            await context.SaveChangesAsync();
+
+            return feedback;
+        } 
+    }
+}
