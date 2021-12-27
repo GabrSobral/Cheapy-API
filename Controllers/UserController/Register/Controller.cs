@@ -20,7 +20,7 @@ namespace Cheapy_API.Controllers.UserController.Register
             [FromBody] RequestModel model)
         {
             if(!ModelState.IsValid)
-                return BadRequest(new { error = "Invalid model" });
+                return BadRequest(ModelState);
 
             try
             {

@@ -18,7 +18,7 @@ namespace Cheapy_API.Controllers.CategoryController.Create
             [FromBody] RequestModel model)
         {
             if(!ModelState.IsValid)
-                return BadRequest("Invalid model");
+                return BadRequest(ModelState);
                 
             try
             {
