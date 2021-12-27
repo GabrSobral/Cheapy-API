@@ -20,7 +20,7 @@ namespace Cheapy_API.Controllers.UserController.Authenticate
             [FromBody] RequestModel model)
         {
             if(!ModelState.IsValid)
-                return BadRequest("Invalid model");
+                return BadRequest(ModelState);
 
             try
             {

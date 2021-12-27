@@ -5,25 +5,21 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.CategoryController.Create
+namespace Cheapy_API.Controllers.ProductController.List
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpPost("categories")]
+        [HttpGet("products")]
         public async Task<IActionResult> Handle(
-            [FromServices] AppDbContext context,
-            [FromBody] RequestModel model)
+            [FromServices] AppDbContext context)
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-                
             try
             {
-                var result = await new Service().Execute(context, model);
-                return Created("", result);
+                var result = await new Service().Execute(context);
+                return Ok(result);
             }
             catch(Exception error)
             {
