@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Cheapy_API.Models
 {
@@ -17,11 +18,11 @@ namespace Cheapy_API.Models
         #endregion
 
         #region Navigation Objects
-            public virtual User Advertiser { get; set; }
-            public virtual List<Category_Product> CategoryProduct { get; set; }
-            public virtual List<Feedback> Feedbacks { get; set; }
-            public virtual List<ShoppingCart> ShoppingCarts { get; set; }
-            public virtual List<PaymentHistory> PaymentsHistory { get; set; }
+            [JsonIgnore] public virtual User Advertiser { get; set; }
+            [JsonIgnore] public virtual List<Category_Product> CategoryProduct { get; set; }
+            [JsonIgnore] public virtual List<Feedback> Feedbacks { get; set; }
+            [JsonIgnore] public virtual List<ShoppingCart> ShoppingCarts { get; set; }
+            [JsonIgnore]public virtual List<PaymentHistory> PaymentsHistory { get; set; }
         #endregion
     }
 }

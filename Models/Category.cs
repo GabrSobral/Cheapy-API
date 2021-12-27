@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using System;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace Cheapy_API.Models
 {
@@ -11,7 +12,7 @@ namespace Cheapy_API.Models
         #endregion
 
         #region Navigations Objects
-            public virtual List<Category_Product> CategoryProduct { get; set; }
+            [JsonIgnore] public virtual List<Category_Product> CategoryProduct { get; set; }
         #endregion
     }
 }
