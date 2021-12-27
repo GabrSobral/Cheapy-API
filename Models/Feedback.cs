@@ -9,7 +9,7 @@ namespace Cheapy_API.Models
             public Guid UserId { get; set; }
             public Guid ProductId { get; set; }
             public string Message { get; set; }
-            public DateTime CreatedAt { get; set; }
+            public DateTime CreatedAt { get; set; } = DateTime.Now;
             public int Stars { get; set; }
         #endregion
 
