@@ -31,7 +31,8 @@ namespace Cheapy_API
             var key = Encoding.ASCII.GetBytes(
                 Configuration.GetSection("JwtSecret").GetSection("Secret").Value);
                 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.RequireHttpsMetadata = false;
                     options.SaveToken = true;
