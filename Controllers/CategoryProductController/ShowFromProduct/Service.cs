@@ -27,7 +27,9 @@ namespace Cheapy_API.Controllers.CategoryProductController.ShowFromProduct
                     Id = c.Id,
                     Name = c.Name,
                 }
-            ).ToListAsync();
+            )
+            .AsNoTracking()
+            .ToListAsync();
 
             return categories;
         }

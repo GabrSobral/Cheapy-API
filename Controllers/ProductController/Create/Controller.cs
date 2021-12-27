@@ -22,7 +22,6 @@ namespace Cheapy_API.Controllers.ProductController.Create
 
             try
             {
-                var userId = GetUserId();
                 var result = await new Service().Execute(context, model, userId: GetUserId());
                 return Created("", result);
             }
