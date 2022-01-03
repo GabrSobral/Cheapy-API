@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.FeedbackController.List
+namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
 {
     [ApiController]
     [Route("v1")]
