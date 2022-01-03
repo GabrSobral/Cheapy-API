@@ -15,6 +15,7 @@ namespace Cheapy_API.Data
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<PaymentHistory> PaymentHistories { get; set; }
+        public DbSet<Photos> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {
