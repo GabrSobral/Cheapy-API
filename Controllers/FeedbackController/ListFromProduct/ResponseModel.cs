@@ -9,7 +9,7 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
         public string Message { get; set; }
         public int Stars { get; set; }
         public Boolean Recomendation { get; set; }
-        public User User { get; set; }
         public DateTime CreatedAt { get; set; }
+        public User User { get; set; }
     }
 }

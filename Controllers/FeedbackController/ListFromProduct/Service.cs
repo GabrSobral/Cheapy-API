@@ -10,9 +10,11 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
 {
     public class Service
     {
-        public async Task<List<ResponseModel>> Execute(AppDbContext context, Guid productId)
+        public async Task<List<ResponseModel>> Execute(AppDbContext context, Guid productId, int page)
         {
-            
+            int limit = 5;
+            page = page == 0 ? 0 : page;
+
             var product = await context.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == productId);
@@ -22,6 +24,8 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
 
             var feedbacks = await context.Feedbacks
                 .Where(x => x.ProductId == productId)
+                .Skip(page * limit)
+                .Take(limit)
                 .Join(
                     context.Users,
                     feedbacks => feedbacks.UserId,

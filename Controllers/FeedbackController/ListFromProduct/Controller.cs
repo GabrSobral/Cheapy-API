@@ -15,11 +15,12 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
         [HttpGet("feedbacks/{id}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromRoute] Guid id)
+            [FromRoute] Guid id,
+            [FromQuery] int page)
         {
             try
             {
-                var result = await new Service().Execute(context, id);
+                var result = await new Service().Execute(context, id, page);
                 return Ok(result);
             }
             catch(Exception error)
