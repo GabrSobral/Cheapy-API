@@ -11,17 +11,31 @@ namespace Cheapy_API.Controllers.PhotoController.Upload
 {
     public class Service
     {
-        public async Task<List<Photos>> Execute(
+        public async Task<Photos> Execute(
             AppDbContext context, 
             RequestModel model,
-            IWebHostEnvironment webHostEnviroment)
+            IWebHostEnvironment webHostEnviroment,
+            Guid productId)
         {
-            string fileName = new ProccessUpload(webHostEnviroment).Upload(model.Photo);
-            
-            Console.WriteLine(model.Photo);
-            Console.WriteLine(model.ProductId);
+            var product = await context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == productId);
 
-            return await context.Photos.ToListAsync();
+            if(product == null)
+                throw new Exception("Product not found status:400");
+                
+            string fileName = new ProccessUpload(webHostEnviroment).Upload(model.Photo);
+
+            var newPhoto = new  Photos
+            {
+                Url = fileName,
+                ProductId = productId
+            };
+
+            await context.Photos.AddAsync(newPhoto);
+            await context.SaveChangesAsync();
+
+            return newPhoto;
         }
     }
 }

@@ -8,8 +8,5 @@ namespace Cheapy_API.Controllers.PhotoController.Upload
         [Required]
         [Display(Name="Photo")]
         public IFormFile Photo { get; set; }
-
-        [Required]
-        public string ProductId { get; set; }
     }
 }

@@ -13,24 +13,29 @@ namespace Cheapy_API.Controllers.PhotoController.Upload
     public class Controller : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+        
         public Controller(IWebHostEnvironment webHostEnvironment) 
         {
+            Console.Write("webHostEnvironment Controller: ");
+            Console.WriteLine(webHostEnvironment.WebRootPath);
             _webHostEnvironment = webHostEnvironment;
-
         }
 
         [Authorize]
-        [HttpPost("photos/new")]
+        [HttpPost("photos/new/{productId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromForm] RequestModel model)
+            [FromForm] RequestModel model,
+            [FromRoute] Guid productId)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {   
-                var result = await new Service().Execute(context, model, _webHostEnvironment);
+                var result = await new Service().Execute(
+                    context, model, _webHostEnvironment, productId);
+                    
                 return Created("", result);
             }
             catch(Exception error)
