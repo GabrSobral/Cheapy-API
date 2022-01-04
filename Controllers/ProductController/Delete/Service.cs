@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,15 @@ namespace Cheapy_API.Controllers.ProductController.Delete
 
             if(product.AdvertiserId != userId) 
                 throw new Exception("Product is not yours status:400");
+
+            context.CategoriesProducts
+                .RemoveRange(context.CategoriesProducts.Where(x => x.ProductId == id));
+
+            context.Photos
+                .RemoveRange(context.Photos.Where(x => x.ProductId == id));
+
+            context.ShoppingCarts
+                .RemoveRange(context.ShoppingCarts.Where(x => x.ProductId == id));
             
             context.Products.Remove(product);
             await context.SaveChangesAsync();
