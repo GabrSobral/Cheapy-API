@@ -16,8 +16,6 @@ namespace Cheapy_API.Controllers.PhotoController.Upload
         
         public Controller(IWebHostEnvironment webHostEnvironment) 
         {
-            Console.Write("webHostEnvironment Controller: ");
-            Console.WriteLine(webHostEnvironment.WebRootPath);
             _webHostEnvironment = webHostEnvironment;
         }
 

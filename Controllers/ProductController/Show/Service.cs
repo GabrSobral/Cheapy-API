@@ -38,6 +38,11 @@ namespace Cheapy_API.Controllers.ProductController.Show
                 .Where(x => x.ProductId == productId)
                 .AsNoTracking()
                 .ToListAsync();
+            
+            foreach(Photos image in images)
+            {
+                image.Url = $"https://localhost:5001/Uploads/{image.Url}";
+            }
 
             var feedbacksSumAndCount = await (
                     from feedbacks in context.Feedbacks 
