@@ -24,6 +24,11 @@ namespace Cheapy_API.Controllers.ProductController.List
             .AsNoTracking()
             .ToListAsync();
 
+            foreach (var product in products)
+            {
+                product.Thumb = $"https://localhost:5001/Uploads/{product.Thumb}";
+            }
+
             return products;
         }
     }

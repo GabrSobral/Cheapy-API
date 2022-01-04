@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Cheapy_API.Controllers.ProductController.Create
 {
@@ -11,18 +12,26 @@ namespace Cheapy_API.Controllers.ProductController.Create
     [Route("v1")]
     public class Controller : BaseController
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public Controller(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         [Authorize]
         [HttpPost("products")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromBody] RequestModel model)
+            [FromForm] RequestModel model)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = await new Service().Execute(context, model, userId: GetUserId());
+                var result = await new Service().Execute(
+                    context, model, userId: GetUserId(), _webHostEnvironment);
                 return Created("", result);
             }
             catch(Exception error)

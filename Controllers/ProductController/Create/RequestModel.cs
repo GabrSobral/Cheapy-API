@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Cheapy_API.Controllers.ProductController.Create
 {
@@ -20,6 +21,6 @@ namespace Cheapy_API.Controllers.ProductController.Create
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Thumb is required")]
-        public string Thumb { get; set; }
+        public IFormFile Thumb { get; set; }
     }
 }
