@@ -1,18 +1,28 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cheapy_API.Models;
 using Cheapy_API.Data;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cheapy_API.Controllers.ProductController.List
 {
     public class Service
     {
-        public async Task<List<Product>> Execute(AppDbContext context)
+        public async Task<List<ResponseModel>> Execute(AppDbContext context)
         {
-            var products = await context.Products
-                .AsNoTracking()
-                .ToListAsync();
+            var products = await (
+                from product in context.Products
+                orderby product.CreatedAt
+                select new ResponseModel{
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Discount = product.Discount,
+                    Thumb = product.ThumbUrl
+                }
+            )
+            .AsNoTracking()
+            .ToListAsync();
 
             return products;
         }

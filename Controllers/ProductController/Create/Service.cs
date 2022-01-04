@@ -17,7 +17,8 @@ namespace Cheapy_API.Controllers.ProductController.Create
                 Price = model.Price,
                 Quantity = model.Quantity,
                 Discount = 0,
-                AdvertiserId = userId
+                AdvertiserId = userId,
+                ThumbUrl = model.Thumb
             };
             
             await context.Products.AddAsync(newProduct);
