@@ -51,6 +51,7 @@ namespace Cheapy_API
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthentication();
