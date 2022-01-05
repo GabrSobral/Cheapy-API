@@ -42,6 +42,8 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
 
             feedback.Message = model.Message;
             feedback.Stars = model.Stars;
+            feedback.Title = model.Title;
+            feedback.Recomendation = model.Recomendation;
 
             context.Feedbacks.Update(feedback);
             await context.SaveChangesAsync();

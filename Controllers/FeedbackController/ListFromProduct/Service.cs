@@ -37,9 +37,14 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
                         CreatedAt = feedbacks.CreatedAt,
                         Stars = feedbacks.Stars,
                         Recomendation = feedbacks.Recomendation,
-                        User = users
+                        User = new 
+                        {
+                            Id = users.Id,
+                            Name = users.Name
+                        }
                     }
                 )
+                .OrderBy(x => x.CreatedAt)
                 .AsNoTracking()
                 .ToListAsync();
 
