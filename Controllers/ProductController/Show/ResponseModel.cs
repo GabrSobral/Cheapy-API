@@ -15,7 +15,7 @@ namespace Cheapy_API.Controllers.ProductController.Show
         public int Feedbacks { get; set; }
         public double AverageRating { get; set; }
         public UserResponseFormat Advertiser { get; set; }
-        public List<Photos> Images { get; set; }
+        public List<ImageResponseFormat> Images { get; set; }
         public List<Category> Tags { get; set; }
     }
 }

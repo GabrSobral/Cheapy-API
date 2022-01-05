@@ -3,7 +3,6 @@ using Cheapy_API.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Cheapy_API.Controllers.ProductController.Show
 {
@@ -11,7 +10,6 @@ namespace Cheapy_API.Controllers.ProductController.Show
     [Route("v1")]
     public class Controller : BaseController
     {
-        [Authorize]
         [HttpGet("products/{productId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
@@ -19,7 +17,7 @@ namespace Cheapy_API.Controllers.ProductController.Show
         {
             try
             {
-                var result = await new Service().Execute(context, productId, GetUserId());
+                var result = await new Service().Execute(context, productId);
                 return Ok(result);
             }
             catch(Exception error)
