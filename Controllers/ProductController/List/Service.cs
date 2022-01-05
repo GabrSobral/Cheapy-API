@@ -27,6 +27,23 @@ namespace Cheapy_API.Controllers.ProductController.List
             foreach (var product in products)
             {
                 product.Thumb = $"https://localhost:5001/Uploads/{product.Thumb}";
+
+                var feedbacksSumAndCount = await (
+                    from feedbacks in context.Feedbacks 
+                    where feedbacks.ProductId == product.Id  
+                    group feedbacks by feedbacks.ProductId into grp
+                    select new 
+                    {
+                        AverageRating = grp.Average(x => x.Stars)
+                    }
+                )
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+                if(feedbacksSumAndCount == null)
+                    product.AverageRating = 0.0;
+                else
+                    product.AverageRating = feedbacksSumAndCount.AverageRating;
             }
 
             return products;

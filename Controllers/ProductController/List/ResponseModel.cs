@@ -10,5 +10,6 @@ namespace Cheapy_API.Controllers.ProductController.List
         public float Price { get; set; }
         public float Discount { get; set; }
         public string Thumb { get; set; }
+        public double AverageRating { get; set; }
     }
 }
