@@ -22,6 +22,7 @@ namespace Cheapy_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.Configure<JwtSecret>(Configuration.GetSection("JwtSecret"));
             services.AddScoped<JsonWebToken>();
@@ -53,6 +54,8 @@ namespace Cheapy_API
 
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();
