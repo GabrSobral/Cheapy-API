@@ -10,6 +10,13 @@ namespace Cheapy_API.Controllers.CategoryProductController.Create
     {
         public async Task<Category_Product> Execute(AppDbContext context, RequestModel model)
         {
+            var product = await context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == model.Product_Id);
+
+            if(product == null)
+                throw new Exception("Product not found status:404");
+
             var alreadyExists = await context.CategoriesProducts
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => 
