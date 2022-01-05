@@ -4,19 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
 
-namespace Cheapy_API.Controllers.ProductController.List
+namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
-        [HttpGet("products")]
+        [HttpGet("feedbacks/{id}")]
         public async Task<IActionResult> Handle(
-            [FromServices] AppDbContext context)
+            [FromServices] AppDbContext context,
+            [FromRoute] Guid id,
+            [FromQuery] int page)
         {
             try
             {
-                var result = await new Service().Execute(context);
+                var result = await new Service().Execute(context, id, page);
                 return Ok(result);
             }
             catch(Exception error)

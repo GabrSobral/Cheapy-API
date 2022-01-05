@@ -1,26 +1,25 @@
 using System;
-using Cheapy_API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using Cheapy_API.Data;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 
-namespace Cheapy_API.Controllers.ProductController.Create
+namespace Cheapy_API.Controllers.UserController.UpdateData
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public Controller(IWebHostEnvironment webHostEnvironment)
+        private readonly IWebHostEnvironment _webHostEnviroment;
+        public Controller(IWebHostEnvironment webHostEnviroment)
         {
-            _webHostEnvironment = webHostEnvironment;
+            _webHostEnviroment = webHostEnviroment;
         }
 
         [Authorize]
-        [HttpPost("products")]
+        [HttpPatch("users")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
             [FromForm] RequestModel model)
@@ -31,8 +30,8 @@ namespace Cheapy_API.Controllers.ProductController.Create
             try
             {
                 var result = await new Service().Execute(
-                    context, model, userId: GetUserId(), _webHostEnvironment);
-                return Created("", result);
+                    context, model, GetUserId(), _webHostEnviroment);
+                return Ok(result);
             }
             catch(Exception error)
             {

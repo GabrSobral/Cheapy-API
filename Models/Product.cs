@@ -15,6 +15,7 @@ namespace Cheapy_API.Models
             public string Description { get; set; }
             public float Discount { get; set; }
             public Guid AdvertiserId { get; set; }
+            public string ThumbUrl { get; set; }
         #endregion
 
         #region Navigation Objects
@@ -23,6 +24,7 @@ namespace Cheapy_API.Models
             [JsonIgnore] public virtual List<Feedback> Feedbacks { get; set; }
             [JsonIgnore] public virtual List<ShoppingCart> ShoppingCarts { get; set; }
             [JsonIgnore] public virtual List<PaymentHistory> PaymentsHistory { get; set; }
+            [JsonIgnore] public virtual List<Photos> Photos { get; set; }
         #endregion
     }
 }

@@ -1,13 +1,20 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Cheapy_API.Data;
+using Cheapy_API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Cheapy_API.Controllers.ProductController.Delete
 {
     public class Service
     {
-        public async Task Execute(AppDbContext context, Guid id, Guid userId)
+        public async Task Execute(
+            AppDbContext context, 
+            Guid id, 
+            Guid userId,
+            IWebHostEnvironment webHostEnvironment)
         {
             var product = await context.Products
                 .AsNoTracking()
@@ -18,6 +25,20 @@ namespace Cheapy_API.Controllers.ProductController.Delete
 
             if(product.AdvertiserId != userId) 
                 throw new Exception("Product is not yours status:400");
+
+            var photos = await context.Photos
+                .Where(x => x.ProductId == id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            ProccessUpload handleFiles = new ProccessUpload(webHostEnvironment);
+
+            foreach(var photo in photos)
+                handleFiles.DeleteFile(photo.Url);
+
+            context.CategoriesProducts.RemoveRange(context.CategoriesProducts.Where(x => x.ProductId == id));
+            context.Photos.RemoveRange(context.Photos.Where(x => x.ProductId == id));
+            context.ShoppingCarts.RemoveRange(context.ShoppingCarts.Where(x => x.ProductId == id));
             
             context.Products.Remove(product);
             await context.SaveChangesAsync();

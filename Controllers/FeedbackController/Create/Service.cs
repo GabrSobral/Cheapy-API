@@ -31,6 +31,8 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
                     ProductId = productId,
                     Message = model.Message,
                     Stars = model.Stars,
+                    Title = model.Title,
+                    Recomendation = model.Recomendation
                 };
                 await context.Feedbacks.AddAsync(newFeedback);
                 await context.SaveChangesAsync();
@@ -40,6 +42,8 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
 
             feedback.Message = model.Message;
             feedback.Stars = model.Stars;
+            feedback.Title = model.Title;
+            feedback.Recomendation = model.Recomendation;
 
             context.Feedbacks.Update(feedback);
             await context.SaveChangesAsync();

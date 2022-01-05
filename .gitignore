@@ -4,6 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 .vscode
 app.sqlite
+certificates
 
 # User-specific files
 *.rsuser
@@ -11,6 +12,9 @@ app.sqlite
 *.user
 *.userosscache
 *.sln.docstates
+
+
+wwwroot/Uploads/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Cheapy_API.Controllers.ProductController.Delete
 {
@@ -11,6 +12,12 @@ namespace Cheapy_API.Controllers.ProductController.Delete
     [Route("v1")]
     public class Controller : BaseController
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public Controller(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         [Authorize]
         [HttpDelete("products/{id}")]
         public async Task<IActionResult> Handle(
@@ -19,7 +26,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         {
             try
             {
-                await new Service().Execute(context, id, userId: GetUserId());
+                await new Service().Execute(context, id, userId: GetUserId(), _webHostEnvironment);
                 return Ok();
             }
             catch(Exception error)

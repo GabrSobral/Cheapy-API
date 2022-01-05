@@ -3,23 +3,21 @@ using Cheapy_API.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Cheapy_API.Services;
-using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.FeedbackController.List
+namespace Cheapy_API.Controllers.ProductController.Show
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
-        [Authorize]
-        [HttpGet("feedbacks/{id}")]
+        [HttpGet("products/{productId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromRoute] Guid id)
+            [FromRoute] Guid productId)
         {
             try
             {
-                var result = await new Service().Execute(context, id);
+                var result = await new Service().Execute(context, productId);
                 return Ok(result);
             }
             catch(Exception error)

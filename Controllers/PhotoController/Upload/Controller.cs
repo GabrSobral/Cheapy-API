@@ -1,37 +1,39 @@
 using System;
-using Cheapy_API.Data;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Cheapy_API.Data;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cheapy_API.Controllers.ProductController.Create
+namespace Cheapy_API.Controllers.PhotoController.Upload
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public Controller(IWebHostEnvironment webHostEnvironment)
+        
+        public Controller(IWebHostEnvironment webHostEnvironment) 
         {
             _webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize]
-        [HttpPost("products")]
+        [HttpPost("photos/new/{productId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromForm] RequestModel model)
+            [FromForm] RequestModel model,
+            [FromRoute] Guid productId)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
-            {
+            {   
                 var result = await new Service().Execute(
-                    context, model, userId: GetUserId(), _webHostEnvironment);
+                    context, model, _webHostEnvironment, productId);
+                    
                 return Created("", result);
             }
             catch(Exception error)
@@ -39,5 +41,6 @@ namespace Cheapy_API.Controllers.ProductController.Create
                 return new ErrorCatcher(error).Return();
             }
         }
+        
     }
 }

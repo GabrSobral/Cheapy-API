@@ -17,7 +17,7 @@ namespace Cheapy_API.Controllers.CategoryProductController.ShowFromProduct
                 .FirstOrDefaultAsync(x => x.Id == productId);
 
             if(product == null)
-                throw new Exception("Product not found status:404");
+                throw new Exception("Product not found status:400");
 
             var categories = await context.CategoriesProducts.Join(
                 context.Categories,

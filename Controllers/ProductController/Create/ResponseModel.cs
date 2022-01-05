@@ -13,6 +13,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
         public string Description { get; set; }
         public float Discount { get; set; }
         public Guid AdvertiserId { get; set; }
+        public string Thumb { get; set; }
 
         public ResponseModel(Product product)
         {
@@ -23,6 +24,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
             this.Quantity = product.Quantity;
             this.Discount = product.Discount;
             this.AdvertiserId = product.AdvertiserId;
+            this.Thumb = product.ThumbUrl;
         }
     }
 }
