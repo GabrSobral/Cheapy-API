@@ -5,6 +5,7 @@ using Cheapy_API.Models;
 using Cheapy_API.Data;
 using Bcrypt = BCrypt.Net.BCrypt;
 using Cheapy_API.Services;
+using Newtonsoft.Json;
 
 namespace Cheapy_API.Controllers.UserController.Register
 {
@@ -22,6 +23,20 @@ namespace Cheapy_API.Controllers.UserController.Register
 
             if(alreadyExists != null)
                 throw new Exception("User already exists status:400");
+
+            TokenDescrypted tokenData;
+            try
+            {
+                tokenData = JsonConvert.DeserializeObject<TokenDescrypted>(
+                    Crypt.Decrypt( model.Token, model.Email.ToLower()));
+            } 
+            catch
+            {
+                throw new Exception("Token error status:400");
+            }
+
+            if(tokenData.ExpiresIn < DateTime.Now)
+                throw new Exception("Token expired");
 
             var hashedPassword = Bcrypt.HashPassword(model.Password);
 

@@ -15,5 +15,8 @@ namespace Cheapy_API.Controllers.UserController.Register
         
         [Required]
         public string Role { get; set; }
+
+        [Required]
+        public string Token { get; set; }
     }
 }
