@@ -8,7 +8,7 @@ namespace Cheapy_API.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Product_Tags> builder)
         {
-            builder.HasKey(productTags => productTags.ProductId);
+            builder.HasKey(productTags => productTags.Id);
             builder.Property(productTags => productTags.Name).IsRequired().HasMaxLength(30);
 
             #region Relations

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Cheapy_API.Models;
 
 namespace Cheapy_API.Controllers.ProductController.Show
 {
@@ -14,8 +13,26 @@ namespace Cheapy_API.Controllers.ProductController.Show
         public string Thumb { get; set; }
         public int Feedbacks { get; set; }
         public double AverageRating { get; set; }
-        public UserResponseFormat Advertiser { get; set; }
-        public List<ImageResponseFormat> Images { get; set; }
-        public List<Category> Tags { get; set; }
+        public UserFormat Advertiser { get; set; }
+        public List<ImageFormat> Images { get; set; }
+        public List<TagFormat> Tags { get; set; }
+    }
+
+    public class ImageFormat
+    {
+        public Guid Id { get; set; }
+        public string Url { get; set; }
+    }
+
+    public class UserFormat
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class TagFormat
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }
