@@ -30,8 +30,7 @@ namespace Cheapy_API.Controllers.UserController.ConfirmationEmail
             Console.WriteLine(JsonConvert.SerializeObject(token));
 
             var tokenEncrypted = Crypt.Encrypt(
-                JsonConvert.SerializeObject(token).ToString(), 
-                model.Email.ToLower()
+                JsonConvert.SerializeObject(token).ToString()
             );
 
             string htmlBody = new StreamReader("Services/confirmation.html").ReadToEnd();
