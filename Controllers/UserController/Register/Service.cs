@@ -28,7 +28,7 @@ namespace Cheapy_API.Controllers.UserController.Register
             try
             {
                 tokenData = JsonConvert.DeserializeObject<TokenDescrypted>(
-                    Crypt.Decrypt( model.Token, model.Email.ToLower()));
+                    Crypt.Decrypt( model.Token));
             } 
             catch
             {
@@ -42,11 +42,15 @@ namespace Cheapy_API.Controllers.UserController.Register
 
             User newUser = new User
             {
+                Id = model.Id,
                 Name = model.Name,
                 Email = model.Email.ToLower(),
                 Password = hashedPassword,
-                Role = model.Role
-            } ;
+                City = model.City,
+                Country = model.Country,
+                State = model.State,
+                PostalCode = model.PostalCode
+            };
 
             await context.AddAsync(newUser);
             await context.SaveChangesAsync();
