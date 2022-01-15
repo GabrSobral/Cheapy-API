@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 using Cheapy_API.Data;
 using Cheapy_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,10 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
 {
     public class Service
     {
-        public async Task<ShoppingCart> Execute(
+        public async Task<CartItem> Execute(
             AppDbContext context, 
             RequestModel model, 
-            Guid userId)
+            string userEmail)
         {
             var product = await context.Products
                 .AsNoTracking()
@@ -20,27 +21,35 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
             if(product == null)
                 throw new Exception("Product not found status:404");
 
-            var alreadYExists = await context.ShoppingCarts
+            var alreadYExists = await context.CartItems
                 .FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
         
             if(alreadYExists != null)
             {
                 alreadYExists.ProductQuantity = model.Quantity;
-                context.ShoppingCarts.Update(alreadYExists);
+                context.CartItems.Update(alreadYExists);
                 await context.SaveChangesAsync();
 
                 return alreadYExists;
             }
-                
+            
+            var userId = await (
+                from user in context.Users
+                where user.Email == userEmail
+                select new { user.Id }
+            )
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
 
-            var newProduct = new ShoppingCart
+
+            var newProduct = new CartItem
             {
                 ProductId = model.ProductId,
-                UserId = userId,
+                UserId = userId.Id,
                 ProductQuantity = model.Quantity
             };
             
-            await context.ShoppingCarts.AddAsync(newProduct);
+            await context.CartItems.AddAsync(newProduct);
             await context.SaveChangesAsync();
             
             return newProduct;
