@@ -13,7 +13,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         public async Task Execute(
             AppDbContext context, 
             Guid id, 
-            Guid userId,
+            string userEmail,
             IWebHostEnvironment webHostEnvironment)
         {
             var product = await context.Products
@@ -22,6 +22,12 @@ namespace Cheapy_API.Controllers.ProductController.Delete
 
             if(product == null)
                 throw new Exception("Product not found status:404");
+
+            var userId = await context.Users
+                .Where(x => x.Email == userEmail)
+                .Select(x => x.Id)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
 
             if(product.AdvertiserId != userId) 
                 throw new Exception("Product is not yours status:400");
@@ -36,10 +42,6 @@ namespace Cheapy_API.Controllers.ProductController.Delete
             foreach(var photo in photos)
                 handleFiles.DeleteFile(photo.Url);
 
-            context.CategoriesProducts.RemoveRange(context.CategoriesProducts.Where(x => x.ProductId == id));
-            context.Photos.RemoveRange(context.Photos.Where(x => x.ProductId == id));
-            context.ShoppingCarts.RemoveRange(context.ShoppingCarts.Where(x => x.ProductId == id));
-            
             context.Products.Remove(product);
             await context.SaveChangesAsync();
         }

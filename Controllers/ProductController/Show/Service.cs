@@ -63,8 +63,9 @@ namespace Cheapy_API.Controllers.ProductController.Show
                 from  users in context.Users
                 where users.Id == product.AdvertiserId
                 select new UserFormat {
-                    Id = users.Id,
-                    Name = users.Name
+                    Email = users.Email,
+                    Name = users.Name,
+                    Photo = users.Photo
                 }
             )
             .AsNoTracking()

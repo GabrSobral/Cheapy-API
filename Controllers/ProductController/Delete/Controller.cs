@@ -26,7 +26,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         {
             try
             {
-                await new Service().Execute(context, id, userId: GetUserId(), _webHostEnvironment);
+                await new Service().Execute(context, id, userEmail: GetUserEmail(), _webHostEnvironment);
                 return Ok();
             }
             catch(Exception error)
