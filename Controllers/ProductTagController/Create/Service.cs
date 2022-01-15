@@ -4,11 +4,11 @@ using Cheapy_API.Data;
 using Cheapy_API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cheapy_API.Controllers.CategoryProductController.Create
+namespace Cheapy_API.Controllers.ProductTagController.Create
 {
     public class Service
     {
-        public async Task<Category_Product> Execute(AppDbContext context, RequestModel model)
+        public async Task<Product_Tags> Execute(AppDbContext context, RequestModel model)
         {
             var product = await context.Products
                 .AsNoTracking()
@@ -17,21 +17,21 @@ namespace Cheapy_API.Controllers.CategoryProductController.Create
             if(product == null)
                 throw new Exception("Product not found status:404");
 
-            var alreadyExists = await context.CategoriesProducts
+            var alreadyExists = await context.ProductTags
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => 
-                    ((x.ProductId == model.Product_Id) && (x.CategoryId == model.Category_id)));
+                    ((x.ProductId == model.Product_Id) && (x.Name == model.Name.ToLower())));
 
             if(alreadyExists != null)
                 throw new Exception("This product already have this category status:400");
 
-            var newProductCatogory = new Category_Product
+            var newProductCatogory = new Product_Tags
             {
                 ProductId = model.Product_Id,
-                CategoryId = model.Category_id
+                Name = model.Name.ToLower()
             };
             
-            await context.CategoriesProducts.AddAsync(newProductCatogory);
+            await context.ProductTags.AddAsync(newProductCatogory);
             await context.SaveChangesAsync();
 
             return newProductCatogory;

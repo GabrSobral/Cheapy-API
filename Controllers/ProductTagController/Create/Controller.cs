@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.CategoryProductController.Create
+namespace Cheapy_API.Controllers.ProductTagController.Create
 {
     [ApiController]
     [Route("v1")]

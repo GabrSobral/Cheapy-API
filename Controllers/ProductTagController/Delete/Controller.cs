@@ -5,21 +5,25 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.CategoryProductController.ShowFromProduct
+namespace Cheapy_API.Controllers.ProductTagController.Delete
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
-        [HttpGet("product/show-categories/{id}")]
+        [Authorize]
+        [HttpPost("category-product")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromRoute] Guid id)
-        {                
+            [FromBody] RequestModel model)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+                
             try
             {
-                var result = await new Service().Execute(context, id);
-                return Ok(result);
+                await new Service().Execute(context, model);
+                return Ok();
             }
             catch(Exception error)
             {
