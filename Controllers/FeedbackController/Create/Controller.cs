@@ -23,8 +23,7 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
 
             try
             {
-                var userId = GetUserId();
-                var result = await new Service().Execute(context, model, GetUserId(), id);
+                var result = await new Service().Execute(context, model, GetUserEmail(), id);
                 return Created("", result);
             }
             catch(Exception error)
