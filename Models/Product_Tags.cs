@@ -3,16 +3,15 @@ using System.Text.Json.Serialization;
 
 namespace Cheapy_API.Models
 {
-    public class Category_Product
+    public class Product_Tags
     {
         #region Columns
             public Guid ProductId { get; set; }
-            public Guid CategoryId { get; set; }
+            public string Name { get; set; }
         #endregion
 
         #region Navigation Objects
             [JsonIgnore] public virtual Product Product { get; set; }
-            [JsonIgnore] public virtual Category Category { get; set; }
         #endregion
     }
 }
