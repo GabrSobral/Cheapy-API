@@ -13,9 +13,9 @@ namespace Cheapy_API.Controllers.ProductController.Create
         [Range(0, float.MaxValue)]
         public float Price { get; set; }
 
-        [Required(ErrorMessage = "Quantity is required")]
+        [Required(ErrorMessage = "Stock is required")]
         [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
+        public int Stock { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
