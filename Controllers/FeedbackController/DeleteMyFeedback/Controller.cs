@@ -19,7 +19,7 @@ namespace Cheapy_API.Controllers.FeedbackController.DeleteMyFeedback
         {
             try
             {
-                await new Service().Execute(context, productId: id, userId: GetUserId());
+                await new Service().Execute(context,id, await GetUserId(context));
                 return Ok();
             }
             catch(Exception error)

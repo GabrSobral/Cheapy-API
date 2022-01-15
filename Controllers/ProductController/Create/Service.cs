@@ -14,16 +14,10 @@ namespace Cheapy_API.Controllers.ProductController.Create
         public async Task<ResponseModel> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userEmail,
+            string userId,
             IWebHostEnvironment webHostEnvironment)
         {
             var thumbPath = new ProccessUpload(webHostEnvironment).Upload(model.Thumb);
-
-            var userId = await context.Users
-                .Where(x => x.Email == userEmail)
-                .Select(x => x.Id)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
 
             if(userId == null)
                 throw new Exception("User not found status:400");

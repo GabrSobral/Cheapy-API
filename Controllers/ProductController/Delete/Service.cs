@@ -13,7 +13,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         public async Task Execute(
             AppDbContext context, 
             Guid id, 
-            string userEmail,
+            string userId,
             IWebHostEnvironment webHostEnvironment)
         {
             var product = await context.Products
@@ -22,12 +22,6 @@ namespace Cheapy_API.Controllers.ProductController.Delete
 
             if(product == null)
                 throw new Exception("Product not found status:404");
-
-            var userId = await context.Users
-                .Where(x => x.Email == userEmail)
-                .Select(x => x.Id)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
 
             if(product.AdvertiserId != userId) 
                 throw new Exception("Product is not yours status:400");

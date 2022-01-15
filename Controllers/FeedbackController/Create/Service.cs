@@ -12,7 +12,7 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
         public async Task<Feedback> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userEmail,
+            string userId,
             Guid productId)
         {
             var product = await context.Products
@@ -20,12 +20,6 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
 
             if(product == null)
                 throw new Exception("Product not found status:404");
-
-            var userId = await context.Users
-                .Where(x => x.Email == userEmail)
-                .Select(x => x.Id)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
                 
             var feedback = await context.Feedbacks
                 .FirstOrDefaultAsync(x => x.UserId == userId);
