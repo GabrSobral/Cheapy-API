@@ -13,7 +13,7 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
         public async Task<User> Execute(
             AppDbContext context, 
             RequestModel model, 
-            Guid userId,
+            string userId,
             IWebHostEnvironment webHostEnviroment )
         {   
             var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
