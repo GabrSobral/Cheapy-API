@@ -16,7 +16,7 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
             string userEmail,
             IWebHostEnvironment webHostEnviroment )
         {   
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userEmail);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == userEmail);
 
             if(user == null)
                 throw new Exception("User not found status:400");
