@@ -6,9 +6,9 @@ namespace Cheapy_API.Services
 {
     public class BaseController : ControllerBase
     {
-        protected Guid GetUserEmail()
+        protected string GetUserEmail()
         {
-            return Guid.Parse(User.Claims.First(i => i.Type == "Email").Value);
+            return User.Claims.First(i => i.Type == "Email").Value;
         }
     }
 }

@@ -13,10 +13,10 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
         public async Task<User> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userId,
+            string userEmail,
             IWebHostEnvironment webHostEnviroment )
         {   
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userEmail);
 
             if(user == null)
                 throw new Exception("User not found status:400");
