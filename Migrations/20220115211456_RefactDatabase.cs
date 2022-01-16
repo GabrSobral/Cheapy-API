@@ -20,7 +20,7 @@ namespace Cheapy_API.Migrations
                     PostalCode = table.Column<string>(type: "TEXT", maxLength: 11, nullable: false),
                     Country = table.Column<string>(type: "TEXT", nullable: true),
                     Telephone = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValue: new DateTime(2022, 1, 15, 11, 51, 14, 383, DateTimeKind.Local).AddTicks(2376)),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValue: new DateTime(2022, 1, 15, 18, 14, 56, 126, DateTimeKind.Local).AddTicks(1515)),
                     Password = table.Column<string>(type: "TEXT", maxLength: 80, nullable: false)
                 },
                 constraints: table =>
@@ -190,12 +190,13 @@ namespace Cheapy_API.Migrations
                 name: "ProductTags",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductTags", x => x.ProductId);
+                    table.PrimaryKey("PK_ProductTags", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProductTags_Products_ProductId",
                         column: x => x.ProductId,
@@ -238,6 +239,11 @@ namespace Cheapy_API.Migrations
                 name: "IX_Products_AdvertiserId",
                 table: "Products",
                 column: "AdvertiserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTags_ProductId",
+                table: "ProductTags",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
