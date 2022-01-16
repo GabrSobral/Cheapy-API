@@ -12,7 +12,7 @@ namespace Cheapy_API.Controllers.ProductTagController.Create
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpPost("category-product")]
+        [HttpPost("product/tags")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
             [FromBody] RequestModel model)
