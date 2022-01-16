@@ -30,7 +30,7 @@ namespace Cheapy_API
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             var key = Encoding.ASCII.GetBytes(
-                Configuration.GetSection("JwtSecret").GetSection("Secret").Value);
+                Configuration.GetValue<string>("JwtSecret:Secret"));
                 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

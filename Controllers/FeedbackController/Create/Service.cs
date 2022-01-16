@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 using Cheapy_API.Data;
 using Cheapy_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
         public async Task<Feedback> Execute(
             AppDbContext context, 
             RequestModel model, 
-            Guid userId,
+            string userId,
             Guid productId)
         {
             var product = await context.Products

@@ -18,25 +18,19 @@ namespace Cheapy_API.Controllers.ProductController.Show
 
             if(product == null)
                 throw new Exception("Product not found status:400");
-
-            var categories = await context.CategoriesProducts
+            
+            var tags = await context.ProductTags
                 .Where(x => x.ProductId == productId)
-                .Join(
-                    context.Categories,
-                    categoryProduct => categoryProduct.CategoryId,
-                    category => category.Id,
-                    (categoryProduct, category) => new Category
-                    {
-                        Id = category.Id,
-                        Name = category.Name
-                    }
-                )
+                .Select(x => new TagFormat{ 
+                    Id = x.Id, 
+                    Name = x.Name 
+                })
                 .AsNoTracking()
                 .ToListAsync();
             
             var images = await context.Photos
                 .Where(x => x.ProductId == productId)
-                .Select(x => new ImageResponseFormat{ 
+                .Select(x => new ImageFormat{ 
                     Id = x.Id, 
                     Url = $"https://localhost:5001/Uploads/{x.Url}" 
                 })
@@ -68,15 +62,16 @@ namespace Cheapy_API.Controllers.ProductController.Show
             var advertiser = await (
                 from  users in context.Users
                 where users.Id == product.AdvertiserId
-                select new UserResponseFormat {
-                    Id = users.Id,
-                    Name = users.Name
+                select new UserFormat {
+                    Email = users.Email,
+                    Name = users.Name,
+                    Photo = users.Photo
                 }
             )
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-            var result = new ResponseModel
+            return new ResponseModel
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -84,15 +79,12 @@ namespace Cheapy_API.Controllers.ProductController.Show
                 Discount = product.Discount,
                 Price = product.Price,
                 Thumb = $"https://localhost:5001/Uploads/{product.ThumbUrl}",
-                Tags = categories,
+                Tags = tags,
                 Images = images,
                 Feedbacks = feedbacksSumAndCount.Feedbacks,
                 AverageRating = feedbacksSumAndCount.AverageRating,
                 Advertiser = advertiser
             };
-
-
-            return result;
         }
     }
 }

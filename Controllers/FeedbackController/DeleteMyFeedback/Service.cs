@@ -7,7 +7,7 @@ namespace Cheapy_API.Controllers.FeedbackController.DeleteMyFeedback
 {
     public class Service
     {
-        public async Task Execute(AppDbContext context, Guid productId, Guid userId)
+        public async Task Execute(AppDbContext context, Guid productId, string userId)
         {
             var product = await context.Products
                 .AsNoTracking()

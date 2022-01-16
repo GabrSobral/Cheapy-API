@@ -5,6 +5,8 @@
 .vscode
 app.sqlite
 certificates
+appsettings.Development.json
+wwwroot/Uploads/*
 
 # User-specific files
 *.rsuser
@@ -12,9 +14,6 @@ certificates
 *.user
 *.userosscache
 *.sln.docstates
-
-
-wwwroot/Uploads/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

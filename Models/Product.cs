@@ -11,19 +11,19 @@ namespace Cheapy_API.Models
             public string Name { get; set; }
             public DateTime CreatedAt { get; set; } = DateTime.Now;
             public float Price { get; set; }
-            public int Quantity { get; set; }
+            public int Stock { get; set; }
             public string Description { get; set; }
             public float Discount { get; set; }
-            public Guid AdvertiserId { get; set; }
+            public string AdvertiserId { get; set; }
             public string ThumbUrl { get; set; }
         #endregion
 
         #region Navigation Objects
             [JsonIgnore] public virtual User Advertiser { get; set; }
-            [JsonIgnore] public virtual List<Category_Product> CategoryProduct { get; set; }
+            [JsonIgnore] public virtual List<Product_Tags> ProductTags { get; set; }
             [JsonIgnore] public virtual List<Feedback> Feedbacks { get; set; }
-            [JsonIgnore] public virtual List<ShoppingCart> ShoppingCarts { get; set; }
-            [JsonIgnore] public virtual List<PaymentHistory> PaymentsHistory { get; set; }
+            [JsonIgnore] public virtual List<CartItem> CartItems { get; set; }
+            [JsonIgnore] public virtual List<OrderItem> OrderItems { get; set; }
             [JsonIgnore] public virtual List<Photos> Photos { get; set; }
         #endregion
     }

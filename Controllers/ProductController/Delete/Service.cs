@@ -13,7 +13,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         public async Task Execute(
             AppDbContext context, 
             Guid id, 
-            Guid userId,
+            string userId,
             IWebHostEnvironment webHostEnvironment)
         {
             var product = await context.Products
@@ -36,10 +36,6 @@ namespace Cheapy_API.Controllers.ProductController.Delete
             foreach(var photo in photos)
                 handleFiles.DeleteFile(photo.Url);
 
-            context.CategoriesProducts.RemoveRange(context.CategoriesProducts.Where(x => x.ProductId == id));
-            context.Photos.RemoveRange(context.Photos.Where(x => x.ProductId == id));
-            context.ShoppingCarts.RemoveRange(context.ShoppingCarts.Where(x => x.ProductId == id));
-            
             context.Products.Remove(product);
             await context.SaveChangesAsync();
         }
