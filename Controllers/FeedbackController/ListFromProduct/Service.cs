@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cheapy_API.Models;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -40,7 +39,8 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
                         User = new 
                         {
                             Id = users.Id,
-                            Name = users.Name
+                            Name = users.Name,
+                            Photo = users.Photo == null ? "" : $"https://localhost:5001/uploads/{users.Photo}" 
                         }
                     }
                 )

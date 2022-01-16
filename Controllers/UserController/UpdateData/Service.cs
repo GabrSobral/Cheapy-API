@@ -23,15 +23,15 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
 
             ProccessUpload handleFiles = new ProccessUpload(webHostEnviroment);
 
-            if(model.Name != "")
+            if(model.Name != null)
                 user.Name = model.Name;
 
             if(model.Photo != null)
-            {   
+            {
                 if(user.Photo != null)
                     handleFiles.DeleteFile(user.Photo);
-                    
-                user.Photo = handleFiles.Upload(model.Photo);;
+
+                user.Photo = handleFiles.Upload(model.Photo);
             }
 
             context.Users.Update(user);
