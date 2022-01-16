@@ -7,13 +7,10 @@ namespace Cheapy_API.Services
     {
         public static string Encrypt(string plainText)
         {
-            var sb = new StringBuilder();
-            var bytes = Encoding.Unicode.GetBytes(plainText);
+            byte[] bytes = Encoding.UTF8.GetBytes(plainText);
+            string hexString = Convert.ToHexString(bytes);
 
-            foreach (var t in bytes)
-                sb.Append(t.ToString("X2"));
-
-            return sb.ToString();
+            return hexString;
         }
 
         public static string Decrypt(string hexString)
@@ -22,7 +19,7 @@ namespace Cheapy_API.Services
             for (var i = 0; i < bytes.Length; i++)
                 bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
 
-            return Encoding.Unicode.GetString(bytes);
+            return Encoding.UTF8.GetString(bytes);
         }
     }
 }
