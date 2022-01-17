@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cheapy_API.Data;
-using Cheapy_API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cheapy_API.Controllers.CartItemController.MyList
@@ -20,7 +18,7 @@ namespace Cheapy_API.Controllers.CartItemController.MyList
                 select new ResponseModel{
                     Id = product.Id,
                     Name = product.Name,
-                    Thumb = product.ThumbUrl,
+                    Thumb = $"https://localhost:5001/Uploads/{product.ThumbUrl}",
                     Quantity = cartItem.ProductQuantity,
                 }
             )
