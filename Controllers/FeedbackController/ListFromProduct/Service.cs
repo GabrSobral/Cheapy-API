@@ -40,7 +40,7 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
                         {
                             Id = users.Id,
                             Name = users.Name,
-                            Photo = users.Photo == null ? "" : $"https://localhost:5001/uploads/{users.Photo}" 
+                            Photo = users.Photo == null ? "" : $"https://localhost:5001/Uploads/{users.Photo}" 
                         }
                     }
                 )
