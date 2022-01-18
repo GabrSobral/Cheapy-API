@@ -20,6 +20,8 @@ namespace Cheapy_API.Controllers.CartItemController.MyList
                     Name = product.Name,
                     Thumb = $"https://localhost:5001/Uploads/{product.ThumbUrl}",
                     Quantity = cartItem.ProductQuantity,
+                    Price = product.Price,
+                    Discount = product.Discount
                 }
             )
             .AsNoTracking()
