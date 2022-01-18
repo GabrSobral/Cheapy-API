@@ -6,7 +6,7 @@ namespace Cheapy_API.Models
     public class Feedback
     {
         #region Columns
-            public string UserId { get; set; }
+            public Guid UserId { get; set; }
             public Guid ProductId { get; set; }
             public string Message { get; set; }
             public string Title { get; set; }
