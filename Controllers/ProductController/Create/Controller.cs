@@ -31,7 +31,7 @@ namespace Cheapy_API.Controllers.ProductController.Create
             try
             {
                 var result = await new Service().Execute(
-                    context, model, await GetUserId(context), _webHostEnvironment);
+                    context, model, GetUserId(), _webHostEnvironment);
                 return Created("", result);
             }
             catch(Exception error)

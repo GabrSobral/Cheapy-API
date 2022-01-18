@@ -21,7 +21,7 @@ namespace Cheapy_API.Controllers.CartItemController.Remove
             {
                 await new Service().Execute(
                     context, 
-                    await GetUserId(context),
+                    GetUserId(),
                     productId
                 );
                 return Ok();

@@ -7,7 +7,7 @@ namespace Cheapy_API.Controllers.CartItemController.Remove
 {
     public class Service
     {
-        public async Task Execute(AppDbContext context, string userId, Guid productId)
+        public async Task Execute(AppDbContext context, Guid userId, Guid productId)
         {
             CartItem cartItem = new CartItem{ ProductId = productId };
             context.CartItems.Attach(cartItem);

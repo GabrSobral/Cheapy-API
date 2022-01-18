@@ -12,7 +12,7 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
         public async Task<Feedback> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userId,
+            Guid userId,
             Guid productId)
         {
             var product = await context.Products

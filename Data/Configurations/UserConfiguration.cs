@@ -11,8 +11,9 @@ namespace Cheapy_API.Data.Configurations
         {
             builder.HasKey(user => user.Id);
             builder.HasIndex(user => user.Email);
+            builder.HasIndex(user => user.CPF);
 
-            builder.Property(user => user.Id).IsRequired().HasMaxLength(12);
+            builder.Property(user => user.CPF).IsRequired().HasMaxLength(12);
             builder.Property(user => user.Name).IsRequired().HasMaxLength(80);
             builder.Property(user => user.Email).IsRequired().HasMaxLength(80);
             builder.Property(user => user.PostalCode).IsRequired().HasMaxLength(11);

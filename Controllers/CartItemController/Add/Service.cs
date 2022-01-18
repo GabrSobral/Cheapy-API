@@ -12,7 +12,7 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
         public async Task<dynamic> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userId)
+            Guid userId)
         {
             if(model.Quantity <= 0)
                 throw new Exception("Quantity cannot be equal 0 status:400");

@@ -22,7 +22,7 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
 
             try
             {
-                var result = await new Service().Execute(context, model, await GetUserId(context));
+                var result = await new Service().Execute(context, model, GetUserId());
                 return Created("", result);
             }
             catch(Exception error)
