@@ -78,7 +78,8 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
                 .AsNoTracking()
                 .ToListAsync();
             
-            feedbacks.Insert(0, myFeedback);
+            if(myFeedback != null)
+                feedbacks.Insert(0, myFeedback);
 
             return feedbacks;
         }
