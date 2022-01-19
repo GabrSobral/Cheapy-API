@@ -9,7 +9,7 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
 {
     public class Service
     {
-        public async Task<List<ResponseModel>> Execute(
+        public async Task<Result> Execute(
             AppDbContext context, 
             Guid productId, 
             int page, 
@@ -18,40 +18,49 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
             int limit = 5;
             page = page == 0 ? 0 : page;
 
+            var result = new Result{
+                Feedbacks = null,
+                MyFeedback = null
+            };
+
+            if(userId != Guid.Empty)
+            {
+                result.MyFeedback = await context.Feedbacks
+                    .Where(x => (x.ProductId == productId) && (x.UserId == userId))
+                    .Join(
+                        context.Users,
+                        feedbacks => feedbacks.UserId,
+                        users => users.Id,
+                        (feedbacks, users) => new ResponseModel
+                        {
+                            Title = feedbacks.Title,
+                            Message = feedbacks.Message,
+                            CreatedAt = feedbacks.CreatedAt,
+                            Stars = feedbacks.Stars,
+                            Recomendation = feedbacks.Recomendation,
+                            User = new 
+                            {
+                                Id = users.Id,
+                                Email = users.Email,
+                                Name = users.Name,
+                                Photo = users.Photo == null ? "" : $"https://localhost:5001/Uploads/{users.Photo}" 
+                            }
+                        }
+                    )
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+            }
+
             var product = await context.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == productId);
 
             if(product == null)
-                throw new Exception("Product not found status:404");
+                throw new Exception("Product not found status:400");
 
-            var myFeedback = await context.Feedbacks
-                .Where(x => (x.ProductId == productId) && (x.UserId == userId))
-                .Join(
-                    context.Users,
-                    feedbacks => feedbacks.UserId,
-                    users => users.Id,
-                    (feedbacks, users) => new ResponseModel
-                    {
-                        Title = feedbacks.Title,
-                        Message = feedbacks.Message,
-                        CreatedAt = feedbacks.CreatedAt,
-                        Stars = feedbacks.Stars,
-                        Recomendation = feedbacks.Recomendation,
-                        User = new 
-                        {
-                            Id = users.Id,
-                            Email = users.Email,
-                            Name = users.Name,
-                            Photo = users.Photo == null ? "" : $"https://localhost:5001/Uploads/{users.Photo}" 
-                        }
-                    }
-                )
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-
-            var feedbacks = await context.Feedbacks
+            result.Feedbacks = await context.Feedbacks
                 .Where(x => (x.ProductId == productId) && (x.UserId != userId))
+                .OrderBy(x => x.CreatedAt)
                 .Skip(page * limit)
                 .Take(limit)
                 .Join(
@@ -74,14 +83,10 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
                         }
                     }
                 )
-                .OrderBy(x => x.CreatedAt)
                 .AsNoTracking()
                 .ToListAsync();
-            
-            if(myFeedback != null)
-                feedbacks.Insert(0, myFeedback);
 
-            return feedbacks;
+            return result;
         }
     }
 }

@@ -8,7 +8,17 @@ namespace Cheapy_API.Services
     {
         protected Guid GetUserId()
         {
-            return Guid.Parse(User.Claims.First(i => i.Type == "Id").Value);
+            try
+            {
+                Guid UserId;
+                Guid.TryParse(User.Claims
+                    .FirstOrDefault(i => i.Type == "Id").Value, out UserId);
+                return UserId; 
+            }
+            catch
+            {
+                return Guid.Empty;
+            }
         }
     }
 }
