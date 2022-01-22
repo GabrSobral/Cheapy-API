@@ -11,7 +11,7 @@ namespace Cheapy_API.Data.Configurations
             builder.HasKey(order => order.Id);
             builder.Property(order => order.Status).IsRequired();
             builder.Property(order => order.UserId).IsRequired();
-            builder.Property(order => order.UserEmail).IsRequired();
+            builder.Property(order => order.UserCPF).IsRequired();
             builder.Property(order => order.Country).IsRequired();
             builder.Property(order => order.PostalCode).IsRequired();
             builder.Property(order => order.ShipPostalCode).IsRequired();

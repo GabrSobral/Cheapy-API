@@ -18,7 +18,7 @@ namespace Cheapy_API.Services
 
         public string Upload(IFormFile file)
         {
-            string uniqueFileName = $"{Guid.NewGuid().ToString()}_{file.FileName}";
+            string uniqueFileName = $"{Guid.NewGuid().ToString()}_{file.FileName.Replace(" ", "_")}";
             string FilePath = Path.Combine(UploadFolder, uniqueFileName);
 
             using (var fileStream = new FileStream(FilePath, FileMode.Create))

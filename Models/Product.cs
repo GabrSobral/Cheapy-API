@@ -14,7 +14,7 @@ namespace Cheapy_API.Models
             public int Stock { get; set; }
             public string Description { get; set; }
             public float Discount { get; set; }
-            public string AdvertiserId { get; set; }
+            public Guid AdvertiserId { get; set; }
             public string ThumbUrl { get; set; }
         #endregion
 

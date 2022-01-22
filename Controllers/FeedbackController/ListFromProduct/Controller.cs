@@ -18,7 +18,12 @@ namespace Cheapy_API.Controllers.FeedbackController.ListFromProduct
         {
             try
             {
-                var result = await new Service().Execute(context, id, page);
+                var result = await new Service().Execute(
+                    context, 
+                    id, 
+                    page,
+                    GetUserId()
+                );
                 return Ok(result);
             }
             catch(Exception error)

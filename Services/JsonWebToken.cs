@@ -24,7 +24,7 @@ namespace Cheapy_API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity( new [] {
-                    new Claim("Email", user.Email),
+                    new Claim("Id", user.Id.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

@@ -6,7 +6,7 @@ namespace Cheapy_API.Models
     public class CartItem
     {
         #region Columns
-            public string UserId { get; set; }
+            public Guid UserId { get; set; }
             public Guid ProductId { get; set; }
             public int ProductQuantity { get; set; }
         #endregion

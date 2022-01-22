@@ -19,7 +19,7 @@ namespace Cheapy_API.Controllers.UserController.Register
         {
             var alreadyExists = await context.Users
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => (x.Id == model.Id) || (x.Email == model.Email.ToLower()));
+                .FirstOrDefaultAsync(x => (x.CPF == model.CPF) || (x.Email == model.Email.ToLower()));
 
             if(alreadyExists != null)
                 throw new Exception("User already exists status:400");
@@ -45,7 +45,7 @@ namespace Cheapy_API.Controllers.UserController.Register
 
             User newUser = new User
             {
-                Id = model.Id,
+                CPF = model.CPF,
                 Name = model.Name,
                 Email = model.Email.ToLower(),
                 Password = hashedPassword,

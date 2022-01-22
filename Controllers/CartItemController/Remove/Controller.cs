@@ -5,21 +5,26 @@ using System.Threading.Tasks;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Cheapy_API.Controllers.CartItemController.MyList
+namespace Cheapy_API.Controllers.CartItemController.Remove
 {
     [ApiController]
     [Route("v1")]
     public class Controller : BaseController
     {
         [Authorize]
-        [HttpGet("shopping/my-list")]
+        [HttpDelete("shopping/{productId}")]
         public async Task<IActionResult> Handle(
-            [FromServices] AppDbContext context)
+            [FromServices] AppDbContext context,
+            [FromRoute] Guid productId )
         {
             try
             {
-                var result = await new Service().Execute(context, GetUserId());
-                return Created("", result);
+                await new Service().Execute(
+                    context, 
+                    GetUserId(),
+                    productId
+                );
+                return Ok();
             }
             catch(Exception error)
             {

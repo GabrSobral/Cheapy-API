@@ -55,7 +55,11 @@ namespace Cheapy_API
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => {
+                options.AllowAnyOrigin();
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

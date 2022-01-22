@@ -27,6 +27,7 @@ namespace Cheapy_API.Controllers.UserController.Authenticate
                 throw new Exception("Email/Password invalid status:400");
 
             var token = _jsonWebToken.Generate(user);
+            user.Photo = $"https://localhost:5001/Uploads/{user.Photo}";            
 
             return new ResponseModel(user, token);
         }

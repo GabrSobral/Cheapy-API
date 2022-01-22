@@ -13,25 +13,25 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
         public async Task<User> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userEmail,
+            Guid userId,
             IWebHostEnvironment webHostEnviroment )
         {   
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == userEmail);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
             if(user == null)
                 throw new Exception("User not found status:400");
 
             ProccessUpload handleFiles = new ProccessUpload(webHostEnviroment);
 
-            if(model.Name != "")
+            if(model.Name != null)
                 user.Name = model.Name;
 
             if(model.Photo != null)
-            {   
+            {
                 if(user.Photo != null)
                     handleFiles.DeleteFile(user.Photo);
-                    
-                user.Photo = handleFiles.Upload(model.Photo);;
+
+                user.Photo = handleFiles.Upload(model.Photo);
             }
 
             context.Users.Update(user);

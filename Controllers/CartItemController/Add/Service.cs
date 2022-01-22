@@ -9,17 +9,20 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
 {
     public class Service
     {
-        public async Task<CartItem> Execute(
+        public async Task<dynamic> Execute(
             AppDbContext context, 
             RequestModel model, 
-            string userEmail)
+            Guid userId)
         {
+            if(model.Quantity <= 0)
+                throw new Exception("Quantity cannot be equal 0 status:400");
+
             var product = await context.Products
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == model.ProductId);
 
             if(product == null)
-                throw new Exception("Product not found status:404");
+                throw new Exception("Product not found status:400");
 
             var alreadYExists = await context.CartItems
                 .FirstOrDefaultAsync(x => x.ProductId == model.ProductId);
@@ -29,23 +32,13 @@ namespace Cheapy_API.Controllers.ShoppingCartsController.Add
                 alreadYExists.ProductQuantity = model.Quantity;
                 context.CartItems.Update(alreadYExists);
                 await context.SaveChangesAsync();
-
                 return alreadYExists;
             }
-            
-            var userId = await (
-                from user in context.Users
-                where user.Email == userEmail
-                select new { user.Id }
-            )
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
 
             var newProduct = new CartItem
             {
                 ProductId = model.ProductId,
-                UserId = userId.Id,
+                UserId = userId,
                 ProductQuantity = model.Quantity
             };
             

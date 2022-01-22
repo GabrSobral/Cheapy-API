@@ -13,7 +13,7 @@ namespace Cheapy_API.Controllers.ProductController.Delete
         public async Task Execute(
             AppDbContext context, 
             Guid id, 
-            string userId,
+            Guid userId,
             IWebHostEnvironment webHostEnvironment)
         {
             var product = await context.Products

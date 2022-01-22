@@ -30,7 +30,7 @@ namespace Cheapy_API.Controllers.UserController.UpdateData
             try
             {
                 var result = await new Service().Execute(
-                    context, model, GetUserEmail(), _webHostEnviroment);
+                    context, model, GetUserId(), _webHostEnviroment);
                 return Ok(result);
             }
             catch(Exception error)

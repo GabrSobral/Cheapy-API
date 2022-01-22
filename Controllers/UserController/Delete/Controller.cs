@@ -15,7 +15,7 @@ namespace Cheapy_API.Controllers.UserController.Delete
         [HttpDelete("users/{userId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromRoute] string userId )
+            [FromRoute] Guid userId )
         {
             try
             {
