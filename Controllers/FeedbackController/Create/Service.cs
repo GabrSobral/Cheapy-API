@@ -22,7 +22,7 @@ namespace Cheapy_API.Controllers.FeedbackController.Create
                 throw new Exception("Product not found status:404");
                 
             var feedback = await context.Feedbacks
-                .FirstOrDefaultAsync(x => x.UserId == userId);
+                .FirstOrDefaultAsync(x => (x.UserId == userId) && (x.ProductId == productId));
 
             if(feedback == null)
             {
