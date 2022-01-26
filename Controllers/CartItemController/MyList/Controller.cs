@@ -19,7 +19,7 @@ namespace Cheapy_API.Controllers.CartItemController.MyList
             try
             {
                 var result = await new Service().Execute(context, GetUserId());
-                return Created("", result);
+                return Ok(result);
             }
             catch(Exception error)
             {
