@@ -7,11 +7,13 @@ namespace Cheapy_API.Controllers.UserController.Register
     {
         public User User { get; set; }
         public string Token { get; set; }
+        public RefreshToken RefreshToken { get; set; }
 
-        public ResponseModel(User user, string token)
+        public ResponseModel(User user, string token, RefreshToken refreshToken)
         {
             this.User = user;
             this.Token = token;
+            this.RefreshToken = refreshToken;
         }
     }
 

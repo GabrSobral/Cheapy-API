@@ -26,10 +26,12 @@ namespace Cheapy_API.Controllers.UserController.Authenticate
             if(!Bcrypt.Verify(model.Password, user.Password))
                 throw new Exception("Email/Password invalid status:400");
 
-            var token = _jsonWebToken.Generate(user);
+            var token = _jsonWebToken.Generate(user.Id);
+            var refreshToken = await new HandleRefreshToken().Generate(context, user.Id);
+
             user.Photo = $"https://localhost:5001/Uploads/{user.Photo}";            
 
-            return new ResponseModel(user, token);
+            return new ResponseModel(user, token, refreshToken);
         }
     }
 }
