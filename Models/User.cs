@@ -30,6 +30,7 @@ namespace Cheapy_API.Models
             [JsonIgnore] public virtual List<Order> OrdersByUser { get; set; }
             [JsonIgnore] public virtual List<Order> OrdersByAdvertiser { get; set; }
             [JsonIgnore] public virtual List<RefreshToken> RefreshTokens { get; set; }
+            [JsonIgnore] public virtual List<Favorite> Favorites { get; set; }
         #endregion
     }
 }

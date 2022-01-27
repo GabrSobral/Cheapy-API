@@ -25,6 +25,7 @@ namespace Cheapy_API.Models
             [JsonIgnore] public virtual List<CartItem> CartItems { get; set; }
             [JsonIgnore] public virtual List<OrderItem> OrderItems { get; set; }
             [JsonIgnore] public virtual List<Photos> Photos { get; set; }
+            [JsonIgnore] public virtual List<Favorite> Favorites { get; set; }
         #endregion
     }
 }
