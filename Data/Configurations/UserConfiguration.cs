@@ -26,6 +26,8 @@ namespace Cheapy_API.Data.Configurations
                 builder.HasMany(user => user.CartItems).WithOne(cartItem => cartItem.User);
                 builder.HasMany(user => user.Feedbacks).WithOne(feedback => feedback.User);
                 builder.HasMany(user => user.Products).WithOne(product => product.Advertiser);
+                builder.HasMany(user => user.RefreshTokens).WithOne(refreshToken => refreshToken.User);
+                builder.HasMany(user => user.Favorites).WithOne(favorite => favorite.User);
             #endregion
         }
     }

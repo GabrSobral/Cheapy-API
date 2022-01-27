@@ -29,7 +29,8 @@ namespace Cheapy_API.Controllers.UserController.Show
             if(user == null)
                 throw new Exception("Email/Password invalid status:400");
 
-            user.Photo = $"https://localhost:5001/Uploads/{user.Photo}";            
+            if(user.Photo != null)
+                user.Photo = $"https://localhost:5001/Uploads/{user.Photo}";            
 
             return user;
         }

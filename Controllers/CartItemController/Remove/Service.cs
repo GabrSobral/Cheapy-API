@@ -9,9 +9,8 @@ namespace Cheapy_API.Controllers.CartItemController.Remove
     {
         public async Task Execute(AppDbContext context, Guid userId, Guid productId)
         {
-            CartItem cartItem = new CartItem{ ProductId = productId };
-            context.CartItems.Attach(cartItem);
-            context.CartItems.Remove(cartItem);
+            var cartItem = new CartItem{ ProductId = productId, UserId = userId };
+            context.Remove(cartItem);
             await context.SaveChangesAsync();
         } 
     }

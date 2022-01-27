@@ -1,32 +1,33 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Cheapy_API.Data;
 using Cheapy_API.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Cheapy_API.Controllers.UserController.Register
+namespace Cheapy_API.Controllers.FavoriteController.Mark
 {
     [ApiController]
     [Route("v1")]
-    public class Controller : ControllerBase
+    public class Controller : BaseController
     {
-        private JsonWebToken _jsonWebToken;
-
-		public Controller(JsonWebToken jsonWebToken) => _jsonWebToken = jsonWebToken;
-
-        [HttpPost("users")]
+        [Authorize]
+        [HttpPost("favorite/{productId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromBody] RequestModel model )
+            [FromRoute] Guid productId)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-
             try
             {
-                var result  = await new Service(_jsonWebToken).Execute(context, model);
-                return Created("", result);
-            } 
+                await new Service().Execute(
+                    context,
+                    GetUserId(),
+                    productId
+                );
+                return Ok();
+            }
             catch(Exception error)
             {
                 return new ErrorCatcher(error).Return();

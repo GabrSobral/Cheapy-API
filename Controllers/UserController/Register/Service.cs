@@ -58,9 +58,10 @@ namespace Cheapy_API.Controllers.UserController.Register
             await context.AddAsync(newUser);
             await context.SaveChangesAsync();
 
-            var token = _jsonWebToken.Generate(newUser);
+            var token = _jsonWebToken.Generate(newUser.Id);
+            var refreshToken = await new HandleRefreshToken().Generate(context, newUser.Id);
 
-            return new ResponseModel(newUser, token);
+            return new ResponseModel(newUser, token, refreshToken);
         }
     }
 }

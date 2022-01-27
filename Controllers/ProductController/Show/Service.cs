@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cheapy_API.Models;
 using Cheapy_API.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +8,10 @@ namespace Cheapy_API.Controllers.ProductController.Show
 {
     public class Service
     {
-        public async Task<ResponseModel> Execute(AppDbContext context, Guid productId)
+        public async Task<ResponseModel> Execute(
+            AppDbContext context, 
+            Guid productId,
+            Guid userId )
         {
             var product = await context.Products
                 .AsNoTracking()
@@ -71,6 +72,10 @@ namespace Cheapy_API.Controllers.ProductController.Show
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
+            var favorite = await context.Favorites
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.ProductId == productId && x.UserId == userId);
+
             return new ResponseModel
             {
                 Id = product.Id,
@@ -83,7 +88,8 @@ namespace Cheapy_API.Controllers.ProductController.Show
                 Images = images,
                 Feedbacks = feedbacksSumAndCount.Feedbacks,
                 AverageRating = feedbacksSumAndCount.AverageRating,
-                Advertiser = advertiser
+                Advertiser = advertiser,
+                IsFavorited = favorite == null ? false:true
             };
         }
     }

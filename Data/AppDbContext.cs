@@ -17,6 +17,8 @@ namespace Cheapy_API.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Photos> Photos { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {
@@ -28,6 +30,8 @@ namespace Cheapy_API.Data
             builder.ApplyConfiguration(new FeedbackConfiguration());
             builder.ApplyConfiguration(new OrderItemConfiguration());
             builder.ApplyConfiguration(new ProductTagsConfiguration());
+            builder.ApplyConfiguration(new RefreshTokenConfiguration());
+            builder.ApplyConfiguration(new FavoriteConfiguration());
         }
     }
 }

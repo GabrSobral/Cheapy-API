@@ -17,16 +17,16 @@ namespace Cheapy_API.Services
 
         public JsonWebToken(IOptions<JwtSecret> options) => _jwtSecret = options.Value;
 
-        public string Generate(User user)
+        public string Generate(Guid userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSecret.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity( new [] {
-                    new Claim("Id", user.Id.ToString()),
+                    new Claim("Id", userId.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), 
                     SecurityAlgorithms.HmacSha256Signature
