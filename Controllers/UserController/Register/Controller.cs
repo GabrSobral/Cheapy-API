@@ -17,7 +17,7 @@ namespace Cheapy_API.Controllers.UserController.Register
         [HttpPost("users")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromBody] RequestModel model)
+            [FromBody] RequestModel model )
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -16,6 +16,7 @@ namespace Cheapy_API.Controllers.ProductController.Show
         public UserFormat Advertiser { get; set; }
         public List<ImageFormat> Images { get; set; }
         public List<TagFormat> Tags { get; set; }
+        public Boolean IsFavorited { get; set; }
     }
 
     public class ImageFormat

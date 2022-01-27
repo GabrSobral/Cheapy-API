@@ -17,7 +17,11 @@ namespace Cheapy_API.Controllers.ProductController.Show
         {
             try
             {
-                var result = await new Service().Execute(context, productId);
+                var result = await new Service().Execute(
+                    context, 
+                    productId,
+                    GetUserId()
+                );
                 return Ok(result);
             }
             catch(Exception error)
