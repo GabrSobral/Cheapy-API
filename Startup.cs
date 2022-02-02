@@ -10,6 +10,8 @@ using Cheapy_API.Settings;
 using Cheapy_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
+using Stripe.Checkout;
 
 namespace Cheapy_API
 {
@@ -22,6 +24,7 @@ namespace Cheapy_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe_API_KEY").Value;
             services.AddCors();
             services.AddControllers();
             services.Configure<JwtSecret>(Configuration.GetSection("JwtSecret"));
