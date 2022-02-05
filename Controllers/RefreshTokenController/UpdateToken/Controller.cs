@@ -14,18 +14,18 @@ namespace Cheapy_API.Controllers.RefreshTokenController.UpdateToken
         private readonly JsonWebToken _jsonWebToken;
         public Controller(JsonWebToken jsonWebToken) => _jsonWebToken = jsonWebToken;
 
-        [Authorize]
         [HttpPost("refresh-token/{refreshTokenId}")]
         public async Task<IActionResult> Handle(
             [FromServices] AppDbContext context,
-            [FromRoute] Guid refreshTokenId)
+            [FromRoute] Guid refreshTokenId,
+            [FromBody] RequestModel model)
         {
             try
             {
                 var result = await new Service(_jsonWebToken).Execute(
                     context, 
                     refreshTokenId,
-                    GetUserId()
+                    model.UserId
                 );
                 return Ok(result);
             }

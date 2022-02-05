@@ -21,6 +21,9 @@ namespace Cheapy_API.Controllers.RefreshTokenController.UpdateToken
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == refreshTokenId);
 
+            Console.WriteLine($"Refreshtoken: {refreshToken.Id}");
+            Console.WriteLine($"UserId: {userId}");
+
             if(refreshToken == null || refreshToken.UserId != userId)
                 throw new Exception("Refresh Token Invalid status:400");
 
