@@ -21,13 +21,10 @@ namespace Cheapy_API.Controllers.RefreshTokenController.UpdateToken
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == refreshTokenId);
 
-            Console.WriteLine($"Refreshtoken: {refreshToken.Id}");
-            Console.WriteLine($"UserId: {userId}");
-
             if(refreshToken == null || refreshToken.UserId != userId)
                 throw new Exception("Refresh Token Invalid status:400");
 
-            var newToken = _jsonWebToken.Generate(refreshToken.Id);
+            var newToken = _jsonWebToken.Generate(refreshToken.UserId);
 
             if(DateTime.Compare(refreshToken.ExpiresIn, DateTime.Now) < 0)
             {
